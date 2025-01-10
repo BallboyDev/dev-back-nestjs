@@ -1,13 +1,16 @@
-import { Module } from "@nestjs/common";
+import { Global, Module } from "@nestjs/common";
 import { AppDataSource } from "./database.config";
 
+@Global()
 @Module({
     providers: [{
         provide: 'DATA_SOURCE',
         useFactory: async () => {
-            await AppDataSource.initialize();
+            if (!AppDataSource.isInitialized) {
+                await AppDataSource.initialize();
+            }
             return AppDataSource
-        }
+        },
     }],
     exports: ['DATA_SOURCE']
 })

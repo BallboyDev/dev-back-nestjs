@@ -4,7 +4,8 @@ import { Member } from "./entity/member.entity";
 import { Score } from "./entity/score.entity";
 
 export const AppDataSource = new DataSource({
-    type: 'mysql',
+    name: 'test',
+    type: 'mariadb',
     host: 'localhost',
     port: 3306,
     username: 'root',
