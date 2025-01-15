@@ -1,8 +1,9 @@
+import { IsPhoneNumber } from "class-validator";
 import dayjs from "dayjs";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
-export class Member {
+export class Members {
     @PrimaryGeneratedColumn()
     id: number
 
@@ -10,11 +11,15 @@ export class Member {
     name: string;
 
     @Column()
-    birthDate: Date;
+    birth: Date;
 
     @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
-    joinDate: Date | null;
+    join: Date | null;
 
     @Column({ default: 1 })
     grade: number | null;
+
+    @Column()
+    @IsPhoneNumber()
+    phone: string
 }

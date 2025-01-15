@@ -1,7 +1,7 @@
 import { DataSource } from "typeorm";
-import { PlayGame } from "./entity/playGame.entity";
-import { Member } from "./entity/member.entity";
-import { Score } from "./entity/score.entity";
+import { PlayGames } from "./entity/playGames.entity";
+import { Members } from "./entity/members.entity";
+import { Scores } from "./entity/scores.entity";
 
 export const AppDataSource = new DataSource({
     name: 'test',
@@ -12,6 +12,6 @@ export const AppDataSource = new DataSource({
     password: '1234',
     database: 'ballboy_dev',
     synchronize: true,
-    entities: [Member, Score, PlayGame],
+    entities: [Members, Scores, PlayGames],
     logging: true
 })

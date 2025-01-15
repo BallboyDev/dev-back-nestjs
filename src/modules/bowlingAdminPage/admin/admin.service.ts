@@ -1,19 +1,27 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { DataSource } from "typeorm";
-import { Bap_c01Input, Bap_c01Output, Bap_c01Query } from "./dto/bap_c01.dto";
+import { CreateMemberInput, CreateMemberOutput, CreateMemberQuery } from "./dto/createMember.dto";
+import { GetMemberOutput, GetMemberQuery } from "./dto/getMember.dto";
+
 
 @Injectable()
 export class AdminService {
     constructor(@Inject('DATA_SOURCE') private readonly dataSource: DataSource) { }
 
-    async bap_c01(input: Bap_c01Input): Promise<Bap_c01Output[]> {
-        const result = await this.dataSource.query(Bap_c01Query, [
+    async getMember(): Promise<GetMemberOutput[]> {
+        return await this.dataSource.query(GetMemberQuery)
+    }
+
+    async createMember(input: CreateMemberInput): Promise<CreateMemberOutput> {
+        const result = await this.dataSource.query(CreateMemberQuery, [
             input.name,
-            input.birthDate
+            input.birth,
+            input.phone
         ])
 
         console.log('ballboy >>', result)
 
-        return null;
+        return new CreateMemberOutput('success', [result.insertId])
     }
+
 }

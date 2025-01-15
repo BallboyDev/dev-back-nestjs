@@ -34,18 +34,18 @@ export const Bap_r01Query = `
     select m.id             as userId, 
             m.name              as name,  
             case 
-                when grade = 1 then '회원' 
+                when m.grade = 1 then '회원' 
                 else '운영진' 
             end                 as grade,
-            count(*)            as count,
-            sum(score)          as total,
-            max(score)          as max,
-            min(score)          as min,
-            avg(score)          as avg
-        from member m 
-            left outer join play_game pg
+            count(s.score)        as count,
+            sum(s.score)          as total,
+            max(s.score)          as max,
+            min(s.score)          as min,
+            avg(s.score)          as avg
+        from members m 
+            left outer join play_games pg
                 on m.id = pg.userId 
-            left outer join score s
+            left outer join scores s
                 on s.gameId = pg.id
         group by m.id;
 `

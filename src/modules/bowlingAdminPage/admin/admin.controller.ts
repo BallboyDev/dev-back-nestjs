@@ -1,13 +1,20 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, Get, Post } from "@nestjs/common";
 import { AdminService } from "./admin.service";
-import { Bap_c01Input } from "./dto/bap_c01.dto";
+import { CreateMemberInput } from "./dto/createMember.dto";
 
-@Controller('bap')
+@Controller('bap/admin')
 export class AdminController {
     constructor(private readonly service: AdminService) { }
 
-    @Post('bap_c01')
-    async createNewMember(@Body() input: Bap_c01Input) {
-        return this.service.bap_c01(input)
+    @Get('memberList')
+    async getMember() {
+        return this.service.getMember()
+    }
+
+    @Post('createMember')
+    async createMember(@Body() input: CreateMemberInput) {
+        console.log('ballboy createNewMember >>', input)
+
+        return this.service.createMember(input);
     }
 }
