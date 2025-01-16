@@ -5,8 +5,8 @@ export class PlayGames {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
-    place: string;
+    @Column({ default: 0 }) // 정기전 : 0, 번개 : 1
+    type: number;
 
     @Column()
     userId: number;
