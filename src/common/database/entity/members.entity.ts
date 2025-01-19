@@ -11,6 +11,9 @@ export class Members {
     name: string;
 
     @Column()
+    memberNum: string;
+
+    @Column()
     birth: Date;
 
     @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
