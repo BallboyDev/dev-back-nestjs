@@ -10,4 +10,7 @@ export class Scores {
 
     @Column()
     score: number;
+
+    @Column()
+    allCover: boolean
 }

@@ -9,8 +9,11 @@ export class PlayGames {
     type: number;
 
     @Column()
-    userId: number;
+    place: string
 
     @Column()
     date: Date;
+
+    @Column()
+    userId: number;
 }
