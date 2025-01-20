@@ -1,25 +1,35 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { DataSource } from "typeorm";
-import { GetScoreRecordOutput, GetScoreRecordQuery } from "./dto/getScoreRecord.dto";
+import { GetScoreRecordOutput, GetScoreRecordQuery_playGame, GetScoreRecordQuery_score } from "./dto/getScoreRecord.dto";
 import { RegistGameInput, RegistGameOutput, RegistGameQuery_insertPlayGames, RegistGameQuery_insertScores } from "./dto/registGame.dto";
 import { RegistScoreInput, RegistScoreOutput, RegistScoreQuery } from "./dto/registScore.dto";
+import { DeletePlayGameOutput, DeletePlayGameQuery_playGame, DeletePlayGameQuery_score } from "./dto/deletePlayGame.dto";
 
 @Injectable()
 export class ScoreRecordService {
     constructor(@Inject('DATA_SOURCE') private readonly dataSource: DataSource) { }
 
     async getScoreRecord(memberNum: number): Promise<GetScoreRecordOutput[]> {
-        return this.dataSource.query(GetScoreRecordQuery, [memberNum])
+        const games = await this.dataSource.query(GetScoreRecordQuery_playGame, [memberNum])
+
+        const output = await Promise.all(
+            games.map(async (v) => {
+                const score = await this.dataSource.query(GetScoreRecordQuery_score, [v.playGameId])
+                return {
+                    ...v,
+                    scores: score
+                }
+            })
+        )
+
+        return output
     }
 
     async registGame(input: RegistGameInput): Promise<RegistGameOutput> {
         const { place, date, type, memberNum, initScore } = input
 
         const resultPlayGames = await this.dataSource.query(RegistGameQuery_insertPlayGames, [place, date, type, memberNum, initScore])
-        console.log('ballboy resultPlayGames >> ', resultPlayGames)
-
         const resultScores = await this.dataSource.query(RegistGameQuery_insertScores, [resultPlayGames.insertId, initScore, false])
-        console.log('ballboy resultScores >> ', resultScores)
 
         return new RegistGameOutput('success', [resultPlayGames.insertId], [resultScores.insertId])
     }
@@ -30,5 +40,11 @@ export class ScoreRecordService {
         const result = await this.dataSource.query(RegistScoreQuery, [playGameId, score])
 
         return new RegistScoreOutput('success', [result.insertId])
+    }
+
+    async deletePlayGame(playGameId: number) {
+        const resultPlayGames = await this.dataSource.query(DeletePlayGameQuery_playGame, [playGameId])
+        const resultScores = await this.dataSource.query(DeletePlayGameQuery_score, [playGameId])
+        return new DeletePlayGameOutput('success', [resultPlayGames.affectedRows + resultScores.affectedRows])
     }
 }

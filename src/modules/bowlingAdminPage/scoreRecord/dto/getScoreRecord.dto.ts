@@ -7,10 +7,10 @@ export class GetScoreRecordOutput {
     count: number;
     total: number;
     avg: number;
-    scores: string;
+    scores: object[]
 }
 
-export const GetScoreRecordQuery = `
+export const GetScoreRecordQuery_playGame = `
     select m.id 			AS id, 
             m.name			as name,
             pg.date			as date,
@@ -21,8 +21,7 @@ export const GetScoreRecordQuery = `
             end                                 as type,
             ifnull(count(s.score), 0)	        as count,
             ifnull(sum(s.score), 0)	            as total,
-            ifnull(avg(s.score), 0)	            as avg,
-            ifnull(group_concat(s.score), '')	as scores
+            ifnull(avg(s.score), 0)	            as avg
         from members as m
             inner join play_games as pg 
                 on pg.userId = m.id
@@ -30,4 +29,13 @@ export const GetScoreRecordQuery = `
                 on s.gameId  = pg.id
         where m.memberNum = ?
         group by m.id, pg.id
+        order by pg.id desc
+`
+export const GetScoreRecordQuery_score = `
+    select s.gameId         as gameId,
+            s.score         as score,
+            s.allCover      as allCover
+        from scores as s
+        where s.gameId = ?
+        order by s.id
 `

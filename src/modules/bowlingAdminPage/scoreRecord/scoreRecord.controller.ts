@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
 import { ScoreRecordService } from "./scoreRecord.service";
 import { RegistGameInput } from "./dto/registGame.dto";
 import { RegistScoreInput } from "./dto/registScore.dto";
@@ -21,5 +21,10 @@ export class ScoreRecordController {
     @Post('registScore')
     async registScore(@Body() input: RegistScoreInput) {
         return this.service.registScore(input)
+    }
+
+    @Delete('deletePlayGame/:playGameId')
+    async deletePlayGame(@Param('playGameId') playGameId: number) {
+        return this.service.deletePlayGame(playGameId);
     }
 }
