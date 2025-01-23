@@ -2,6 +2,7 @@ export class GetScoreRecordOutput {
     id: number;
     name: string;
     date: Date;
+    place: string;
     playGameId: number;
     type: string;
     count: number;
@@ -15,6 +16,7 @@ export const GetScoreRecordQuery_playGame = `
             m.name			as name,
             pg.date			as date,
             pg.id           as playGameId,
+            pg.place        as place,
             case 
                 when pg.type = 0 then '정기전'
                 else '번개'
