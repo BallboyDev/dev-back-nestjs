@@ -1,9 +1,8 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Commons } from "./common.entity";
 
 @Entity()
-export class PlayGames {
-    @PrimaryGeneratedColumn()
-    id: number;
+export class PlayGames extends Commons {
 
     @Column({ default: 0 }) // 정기전 : 0, 번개 : 1
     type: number;

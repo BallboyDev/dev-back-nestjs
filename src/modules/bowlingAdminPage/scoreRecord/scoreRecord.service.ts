@@ -4,6 +4,8 @@ import { GetScoreRecordOutput, GetScoreRecordQuery_playGame, GetScoreRecordQuery
 import { RegistGameInput, RegistGameOutput, RegistGameQuery_insertPlayGames, RegistGameQuery_insertScores } from "./dto/registGame.dto";
 import { RegistScoreInput, RegistScoreOutput, RegistScoreQuery } from "./dto/registScore.dto";
 import { DeletePlayGameOutput, DeletePlayGameQuery_playGame, DeletePlayGameQuery_score } from "./dto/deletePlayGame.dto";
+import { UpdateScoreInput, UpdateScoreOutput, UpdateScoreQuery } from "./dto/updateScore.dto";
+import { UpdateGameInput, UpdateGameOutput, UpdateGameQuery } from "./dto/updateGame.dto";
 
 @Injectable()
 export class ScoreRecordService {
@@ -34,12 +36,25 @@ export class ScoreRecordService {
         return new RegistGameOutput('success', [resultPlayGames.insertId], [resultScores.insertId])
     }
 
+    async updateGame(input: UpdateGameInput): Promise<UpdateGameOutput> {
+        const { id, date, place } = input
+        const result = await this.dataSource.query(UpdateGameQuery, [date, place, id])
+
+        return new UpdateGameOutput('success', [result.insertId])
+    }
+
     async registScore(input: RegistScoreInput): Promise<RegistScoreOutput> {
         const { playGameId, score } = input
 
         const result = await this.dataSource.query(RegistScoreQuery, [playGameId, score])
 
         return new RegistScoreOutput('success', [result.insertId])
+    }
+
+    async updateScore(input: UpdateScoreInput): Promise<UpdateScoreOutput> {
+        const { id, score } = input
+        const result = await this.dataSource.query(UpdateScoreQuery, [score, id])
+        return new UpdateScoreOutput('success', [result.insertId])
     }
 
     async deletePlayGame(playGameId: number) {

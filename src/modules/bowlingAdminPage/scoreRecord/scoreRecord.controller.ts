@@ -2,6 +2,8 @@ import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
 import { ScoreRecordService } from "./scoreRecord.service";
 import { RegistGameInput } from "./dto/registGame.dto";
 import { RegistScoreInput } from "./dto/registScore.dto";
+import { UpdateScoreInput } from "./dto/updateScore.dto";
+import { UpdateGameInput } from "./dto/updateGame.dto";
 
 @Controller('bap/scoreRecord')
 export class ScoreRecordController {
@@ -18,9 +20,19 @@ export class ScoreRecordController {
         return this.service.registGame(input)
     }
 
+    @Post('updateGame')
+    async updateGame(@Body() input: UpdateGameInput) {
+        return this.service.updateGame(input)
+    }
+
     @Post('registScore')
     async registScore(@Body() input: RegistScoreInput) {
         return this.service.registScore(input)
+    }
+
+    @Post('updateScore')
+    async updateScore(@Body() input: UpdateScoreInput) {
+        return this.service.updateScore(input)
     }
 
     @Delete('deletePlayGame/:playGameId')

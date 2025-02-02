@@ -1,11 +1,10 @@
 import { IsPhoneNumber } from "class-validator";
 import dayjs from "dayjs";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Commons } from "./common.entity";
 
 @Entity()
-export class Members {
-    @PrimaryGeneratedColumn()
-    id: number
+export class Members extends Commons {
 
     @Column()
     name: string;

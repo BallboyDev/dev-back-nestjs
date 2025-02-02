@@ -34,7 +34,8 @@ export const GetScoreRecordQuery_playGame = `
         order by pg.id desc
 `
 export const GetScoreRecordQuery_score = `
-    select s.gameId         as gameId,
+    select s.id             as id,
+            s.gameId        as gameId,
             s.score         as score,
             s.allCover      as allCover
         from scores as s
