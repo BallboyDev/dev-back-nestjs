@@ -21,7 +21,7 @@ export class Members extends Commons {
     @Column({ default: 1 })
     grade: number | null;
 
-    @Column()
+    @Column({ default: '010-0000-0000' })
     @IsPhoneNumber()
     phone: string
 }

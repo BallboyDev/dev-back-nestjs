@@ -6,7 +6,9 @@ import { Scores } from "./entity/scores.entity";
 export const AppDataSource = new DataSource({
     name: 'test',
     type: 'mariadb',
-    host: 'localhost',
+    // host: '172.17.0.2',
+    // host: 'localhost',
+    host: process.env.DB_HOST,
     port: 3306,
     username: 'root',
     password: '1234',

@@ -45,3 +45,7 @@ $ npm run test:cov
     - `curl localhost:3000/bap`
 - 회원 추가
     - `curl -d '{"name":"테스트4","birthDate":19991231}' -H "Content-Type: application/json" -X POST localhost:3000/bap/bap_c01`
+
+## Docker 
+1. docker build . -t nest-docker
+2. docker container run -d -p 3000:3000 -it nest-docker
