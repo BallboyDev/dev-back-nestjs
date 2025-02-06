@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { Commons } from "./common.entity";
+import { Commons } from "../common.entity";
 
 @Entity()
 export class Scores extends Commons {
