@@ -1,9 +1,9 @@
 import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
 import { ScoreRecordService } from "./scoreRecord.service";
-import { RegistGameInput } from "./dto/registGame.dto";
 import { RegistScoreInput } from "./dto/registScore.dto";
 import { UpdateScoreInput } from "./dto/updateScore.dto";
 import { UpdateGameInput } from "./dto/updateGame.dto";
+import { RegistGameInput } from "./dto/registGame.dto";
 
 @Controller('bap/scoreRecord')
 export class ScoreRecordController {
@@ -11,7 +11,6 @@ export class ScoreRecordController {
 
     @Get(':memberNum')
     async getScoreRecord(@Param('memberNum') memberNum: number) {
-
         return this.service.getScoreRecord(memberNum);
     }
 

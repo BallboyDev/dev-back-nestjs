@@ -1,11 +1,11 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { DataSource } from "typeorm";
 import { GetScoreRecordOutput, GetScoreRecordQuery_playGame, GetScoreRecordQuery_score } from "./dto/getScoreRecord.dto";
-import { RegistGameInput, RegistGameOutput, RegistGameQuery_insertPlayGames, RegistGameQuery_insertScores } from "./dto/registGame.dto";
 import { RegistScoreInput, RegistScoreOutput, RegistScoreQuery } from "./dto/registScore.dto";
 import { DeletePlayGameOutput, DeletePlayGameQuery_playGame, DeletePlayGameQuery_score } from "./dto/deletePlayGame.dto";
 import { UpdateScoreInput, UpdateScoreOutput, UpdateScoreQuery } from "./dto/updateScore.dto";
 import { UpdateGameInput, UpdateGameOutput, UpdateGameQuery } from "./dto/updateGame.dto";
+import { RegistGameInput, RegistGameOutput, RegistGameQuery_insertPlayGames, RegistGameQuery_insertScores } from "./dto/registGame.dto";
 
 @Injectable()
 export class ScoreRecordService {
@@ -28,10 +28,10 @@ export class ScoreRecordService {
     }
 
     async registGame(input: RegistGameInput): Promise<RegistGameOutput> {
-        const { place, date, type, memberNum, initScore } = input
+        const { date, place, type, memberNum, inputScoreList } = input
 
-        const resultPlayGames = await this.dataSource.query(RegistGameQuery_insertPlayGames, [place, date, type, memberNum, initScore])
-        const resultScores = await this.dataSource.query(RegistGameQuery_insertScores, [resultPlayGames.insertId, initScore, false])
+        const resultPlayGames = await this.dataSource.query(RegistGameQuery_insertPlayGames, [place, date, type, memberNum])
+        const resultScores = await this.dataSource.query(RegistGameQuery_insertScores(resultPlayGames.insertId, inputScoreList), [])
 
         return new RegistGameOutput('success', [resultPlayGames.insertId], [resultScores.insertId])
     }

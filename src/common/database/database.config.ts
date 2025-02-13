@@ -13,5 +13,5 @@ export const AppDataSource = new DataSource({
     database: 'ballboy_dev',
     synchronize: true,
     entities: [Members, Scores, PlayGames],
-    logging: true
+    logging: false
 })

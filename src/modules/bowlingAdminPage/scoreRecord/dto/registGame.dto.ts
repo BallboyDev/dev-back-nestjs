@@ -14,8 +14,8 @@ export class RegistGameInput {
     @IsString()
     memberNum: String
 
-    @IsNumber()
-    initScore: number
+    @IsArray()
+    inputScoreList: number[]
 }
 
 export class RegistGameOutput {
@@ -42,8 +42,13 @@ export const RegistGameQuery_insertPlayGames = `
         where m.memberNum = ?;
 `
 
-export const RegistGameQuery_insertScores = `
-    insert into scores (gameId, score, allCover)
-        values(?, ?, ?)
-`
+export const RegistGameQuery_insertScores = (id: number, scoreList: number[]): string => {
+
+    const base = 'insert into scores (gameId, score, allCover) values'
+    const scores = scoreList.map((v) => {
+        return `(${id}, ${v}, false)`
+    }).join(',')
+
+    return base + scores
+}
 
