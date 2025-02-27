@@ -2,6 +2,7 @@ import { DataSource } from "typeorm";
 import { PlayGames } from "./entity/bowlingAdminPage/playGames.entity";
 import { Members } from "./entity/bowlingAdminPage/members.entity";
 import { Scores } from "./entity/bowlingAdminPage/scores.entity";
+import { BowlingAlleys } from "./entity/bowlingAdminPage/bowlingAlleys.entity";
 
 export const AppDataSource = new DataSource({
     name: 'test',
@@ -12,6 +13,6 @@ export const AppDataSource = new DataSource({
     password: '1234',
     database: 'ballboy_dev',
     synchronize: true,
-    entities: [Members, Scores, PlayGames],
+    entities: [Members, Scores, PlayGames, BowlingAlleys],
     logging: false
 })
