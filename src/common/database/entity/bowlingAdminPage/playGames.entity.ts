@@ -11,9 +11,6 @@ export class PlayGames extends Commons {
     place: string
 
     @Column()
-    placeId: number
-
-    @Column()
     date: Date;
 
     @Column()
