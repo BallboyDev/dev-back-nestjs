@@ -7,6 +7,7 @@ import { TodoListModule } from './modules/todoList/todoList.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { ConfigModule } from '@nestjs/config';
+import { ExecutorModule } from './modules/executor/executor.module';
 
 
 
@@ -19,7 +20,8 @@ import { ConfigModule } from '@nestjs/config';
     ServeStaticModule.forRoot({ rootPath: join(__dirname, '..', 'client') }),
     DatabaseModule,
     BowlingModule,
-    TodoListModule
+    TodoListModule,
+    ExecutorModule,
   ],
   controllers: [AppController,],
   providers: [AppService,],
